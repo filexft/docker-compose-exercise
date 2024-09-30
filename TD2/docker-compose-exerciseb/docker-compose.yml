@@ -1,0 +1,23 @@
+services:
+  database:
+    build:
+    # build from Dockerfile
+      context: ./database
+      dockerfile: Dockerfile 
+    ports:
+      - "3306:3306"
+    volumes:
+      - .:/database
+    environment:
+          MYSQL_ROOT_PASSWORD: "movie123"
+          
+  web:
+    build:
+      context: ./webap
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - database
+    volumes:
+     - .:/webapp
